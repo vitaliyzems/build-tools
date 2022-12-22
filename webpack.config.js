@@ -1,18 +1,25 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { resolve } = require("path");
 
 module.exports = {
   entry: "./src/main.js",
   output: {
-    filename: "main.bundle.js",
+    filename: "bundle.js",
+    path: resolve(__dirname, "dist"),
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: resolve(__dirname, "index.html") }),
-    new BundleAnalyzerPlugin(),
+    new HtmlWebpackPlugin({ template: resolve(__dirname, "src/index.html") }),
+    new CleanWebpackPlugin(),
   ],
   module: {
-    rules: [{ test: /\.mp3$/i, use: "file-loader" }],
+    rules: [
+      {
+        test: /\.mp3$/i,
+        loader: "file-loader",
+        options: { name: "audio/[name].[ext]" },
+      },
+    ],
   },
   devServer: {
     port: 9999,

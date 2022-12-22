@@ -1,8 +1,10 @@
 import { formatError, formatTime } from "./utils.js";
 import { hoursInput, minutesInput, secondsInput } from "./main.js";
+import timerBell from "./audio/timer-bell.mp3";
+
+const audio = new Audio(timerBell);
 
 const timerMessage = document.getElementById("timerMessage");
-const timerBell = document.getElementById("timer-bell");
 
 export function createTimer(time) {
   timerMessage.innerHTML = "";
@@ -15,7 +17,7 @@ export function createTimer(time) {
   const timerId = setInterval(() => {
     if (time === 1) {
       timerMessage.innerHTML = "Время вышло";
-      timerBell.play();
+      audio.play();
       clearInterval(timerId);
     }
     const timeObj = formatTime(--time);
